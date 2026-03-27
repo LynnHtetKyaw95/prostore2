@@ -4,6 +4,7 @@ import "@/app/_styles/globals.css";
 
 import { APP_NAME } from "@/lib/constants";
 import { APP_DESCRIPTION } from "@/lib/constants";
+import { ThemeProvider } from "./context/ThemeProvider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -23,8 +24,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${inter.className}`}>{children}</body>
+    <html lang="en" suppressHydrationWarning>
+      <body className={`${inter.className}`}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
+      </body>
     </html>
   );
 }

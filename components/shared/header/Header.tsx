@@ -29,7 +29,7 @@ const Header = () => {
               <ShoppingCart /> Cart
             </Link>
           </Button>
-          <Button variant="ghost">
+          <Button>
             <Link href="/sign-in" className="flex-center gap-2">
               <UserIcon /> Sign In
             </Link>

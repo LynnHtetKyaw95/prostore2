@@ -1,9 +1,6 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-
-const inter = Inter({
-  subsets: ["latin"],
-});
+import Footer from "@/components/Footer";
+import Header from "@/components/shared/header/Header";
+import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "HOME",
@@ -16,7 +13,9 @@ export default function AppLayout({
 }>) {
   return (
     <div className="flex h-screen flex-col">
+      <Header />
       <main className="flex-1 wrapper">{children}</main>
+      <Footer />
     </div>
   );
 }

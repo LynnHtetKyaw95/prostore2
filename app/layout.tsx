@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "@/globals.css";
+import "@/app/_styles/globals.css";
+
+import { APP_NAME } from "@/lib/constants";
+import { APP_DESCRIPTION } from "@/lib/constants";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -8,10 +11,10 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | The ProStore",
-    default: "Welcome | The ProStore",
+    template: `%s | ${APP_NAME}`,
+    default: `Welcome | ${APP_NAME}`,
   },
-  description: "E-commerce store built with Next.js",
+  description: `${APP_DESCRIPTION}`,
 };
 
 export default function RootLayout({

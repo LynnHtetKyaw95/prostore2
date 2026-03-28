@@ -1,10 +1,8 @@
-import { Button } from "@/components/ui/button";
-
-const page = () => {
+const HomePage = () => {
   return (
     <div>
-      <h1>PROSTORE</h1>
+      <h1>Prostore</h1>
     </div>
   );
 };
-export default page;
+export default HomePage;

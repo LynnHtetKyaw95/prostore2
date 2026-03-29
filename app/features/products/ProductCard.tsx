@@ -2,9 +2,10 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import Image from "next/image";
 import Link from "next/link";
 import ProductPrice from "./ProductPrice";
+import { Product } from "@/types";
 
 interface ProductCardProps {
-  product: any; // later change type
+  product: Product; // later change type
 }
 
 const ProductCard = ({ product }: ProductCardProps) => {
@@ -33,7 +34,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
           <p>{rating} stars</p>
 
           {stock > 0 ? (
-            <ProductPrice value={price} />
+            <ProductPrice price={Number(price)} />
           ) : (
             <p className="text-destructive">Out of Stock</p>
           )}

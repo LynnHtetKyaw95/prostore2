@@ -1,7 +1,7 @@
 import ProductList from "../features/products/ProductList";
 import { Suspense } from "react";
 
-// export const revalidate = 60; // later (SSG + ISR) when fetching data from server
+export const revalidate = 60;
 
 const HomePage = () => {
   return (

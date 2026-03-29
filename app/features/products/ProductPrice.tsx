@@ -1,12 +1,12 @@
 import { cn } from "@/lib/utils";
 
 interface ProductPriceProps {
-  value: number;
+  price: number;
   className?: string;
 }
 
-const ProductPrice = ({ value, className }: ProductPriceProps) => {
-  const priceValue = Number(value).toFixed(2);
+const ProductPrice = ({ price, className }: ProductPriceProps) => {
+  const priceValue = price.toFixed(2);
 
   const [intValue, floatValue] = priceValue.split(".");
 

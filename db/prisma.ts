@@ -1,7 +1,13 @@
-import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "@prisma/client";
+import { PrismaNeon } from "@prisma/adapter-neon";
 
-const adapter = new PrismaPg({
+import { neonConfig } from "@neondatabase/serverless";
+import ws from "ws";
+
+// Set up WebSocket connections, which enables Neon to use Websocket communicator
+neonConfig.webSocketConstructor = ws;
+
+const adapter = new PrismaNeon({
   connectionString: process.env.DATABASE_URL!,
 });
 

@@ -6,7 +6,7 @@ interface ProductPriceProps {
 }
 
 const ProductPrice = ({ value, className }: ProductPriceProps) => {
-  const priceValue = value.toFixed(2);
+  const priceValue = Number(value).toFixed(2);
 
   const [intValue, floatValue] = priceValue.split(".");
 

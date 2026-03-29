@@ -1,4 +1,3 @@
-import sampleData from "@/db/sample-data";
 import ProductList from "../features/products/ProductList";
 import { Suspense } from "react";
 
@@ -11,7 +10,7 @@ const HomePage = () => {
 
       <h2 className="h2-bold">Newest Arrivals</h2>
       <Suspense fallback={<p>Loading...</p>}>
-        <ProductList data={sampleData.products} limit={4} />
+        <ProductList />
       </Suspense>
     </div>
   );

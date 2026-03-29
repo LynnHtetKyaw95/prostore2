@@ -1,18 +1,14 @@
+import { getLatestProducts } from "@/lib/actions/productAction";
 import ProductCard from "./ProductCard";
 
-interface ProductListProps {
-  data: any[]; // later change to type
-  limit?: number;
-}
-
-const ProductList = ({ data, limit }: ProductListProps) => {
-  const limitedData = limit ? data.slice(0, limit) : data;
+const ProductList = async () => {
+  const latestProducts = await getLatestProducts();
 
   return (
     <div className="my-10">
-      {data.length > 0 ? (
+      {latestProducts.length > 0 ? (
         <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          {limitedData.map((product: any) => (
+          {latestProducts.map((product: any) => (
             <ProductCard key={product.slug} product={product} />
           ))}
         </div>

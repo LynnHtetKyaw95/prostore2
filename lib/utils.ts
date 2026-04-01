@@ -1,5 +1,7 @@
+import { Prisma } from "@prisma/client";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { ZodError } from "zod";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -14,4 +16,26 @@ export function convertToPlainObject<T>(value: T): T {
 export function formatNumberWithDecimal(num: number): string {
   const [int, decimal] = num.toString().split(".");
   return decimal ? `${int}.${decimal.padEnd(2, "0")}` : `${int}.00`;
+}
+
+// Format error
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function formatErrors(error: any) {
+  if (error instanceof ZodError) {
+    // Handle Zod error
+    return error.issues.map((error) => error.message).join(". ");
+  } else if (
+    // Handle Prisma Error
+    error instanceof Prisma.PrismaClientKnownRequestError
+  ) {
+    // console.log(`Error code: ${error.code}`);
+    if (error.code === "P2002") {
+      return "Email already exists";
+    }
+  } else {
+    // Handle other errors
+    return typeof error.message === "string"
+      ? error.message
+      : JSON.stringify(error.message);
+  }
 }

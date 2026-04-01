@@ -5,10 +5,11 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { EllipsisVertical, ShoppingCart, UserIcon } from "lucide-react";
+import { EllipsisVertical, ShoppingCart } from "lucide-react";
 import { DarkModeToggle } from "./DarkModeToggle";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import UserButton from "./UserButton";
 
 const Menu = () => {
   return (
@@ -21,13 +22,10 @@ const Menu = () => {
               <ShoppingCart /> Cart
             </Link>
           </Button>
-          <Button asChild>
-            <Link href="/sign-in">
-              <UserIcon /> Sign In
-            </Link>
-          </Button>
+          <UserButton />
         </nav>
 
+        {/* Mobile Menu */}
         <nav className="md:hidden">
           <Sheet>
             <SheetTrigger className="align-middle">
@@ -41,11 +39,7 @@ const Menu = () => {
                   <ShoppingCart /> Cart
                 </Link>
               </Button>
-              <Button asChild>
-                <Link href="/sign-in">
-                  <UserIcon /> Sign In
-                </Link>
-              </Button>
+              <UserButton />
             </SheetContent>
             <SheetDescription></SheetDescription>
           </Sheet>

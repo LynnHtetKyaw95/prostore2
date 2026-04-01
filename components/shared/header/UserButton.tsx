@@ -9,7 +9,6 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Label } from "@/components/ui/label";
 import SignOutUser from "@/app/features/auth/SignOutUser";
 
 const UserButton = async () => {

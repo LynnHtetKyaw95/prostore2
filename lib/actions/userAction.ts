@@ -58,7 +58,11 @@ export async function signUpUser(prevState: unknown, formData: FormData) {
       },
     });
 
-    await signIn("credentials", { email: user.email, password: plainPassword }); // sign in with plainPassword, if not just use user.password
+    await signIn("credentials", {
+      email: user.email,
+      password: plainPassword,
+      redirect: false,
+    });
 
     return { success: true, message: "User registerd successfully" };
   } catch (error) {

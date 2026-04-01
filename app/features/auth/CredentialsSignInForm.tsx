@@ -1,13 +1,33 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-
 import { signInDefaultValues } from "@/lib/constants";
+import { signInWithCredentials } from "@/lib/actions/userAction";
+import { useActionState } from "react";
+import { useFormStatus } from "react-dom";
+
 import Link from "next/link";
 
-const CredentialsSignInForm = () => {
+const SignInButton = () => {
+  const { pending } = useFormStatus();
+
   return (
-    <form className="mt-6">
+    <Button disabled={pending} className="w-full" variant={"default"}>
+      {pending ? "Signing In..." : "Sign In"}
+    </Button>
+  );
+};
+
+const CredentialsSignInForm = () => {
+  const [data, action] = useActionState(signInWithCredentials, {
+    success: false,
+    message: "",
+  });
+
+  return (
+    <form action={action} className="mt-6">
       <div className="space-y-6">
         <div className="flex flex-col gap-4">
           <Label htmlFor="email">Email</Label>
@@ -33,10 +53,12 @@ const CredentialsSignInForm = () => {
         </div>
 
         <div>
-          <Button className="w-full" variant={"default"}>
-            Sign In
-          </Button>
+          <SignInButton />
         </div>
+
+        {data && !data.success && (
+          <div className="text-center text-destructive">{data.message}</div>
+        )}
 
         <div className="text-sm text-center text-muted-foreground">
           <p>
@@ -50,4 +72,5 @@ const CredentialsSignInForm = () => {
     </form>
   );
 };
+
 export default CredentialsSignInForm;

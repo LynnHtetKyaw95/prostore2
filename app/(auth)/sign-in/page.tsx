@@ -11,12 +11,20 @@ import Link from "next/link";
 
 import { APP_NAME } from "@/lib/constants";
 import CredentialsSignInForm from "@/app/features/auth/CredentialsSignInForm";
+import { auth } from "@/auth";
+import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "Sign In",
 };
 
-const SignInPage = () => {
+const SignInPage = async () => {
+  const session = await auth();
+
+  if (session) {
+    return redirect("/");
+  }
+
   return (
     <div className="w-full max-w-md mx-auto">
       <Card>

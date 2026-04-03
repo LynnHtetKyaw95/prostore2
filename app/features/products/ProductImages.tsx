@@ -16,6 +16,7 @@ const ProductImages = ({ images }: { images: string[] }) => {
         height={1000}
         className="min-h-75 object-cover object-center"
         loading="eager"
+        style={{ width: "100%", height: "auto" }}
       />
 
       <div className="flex">
@@ -28,7 +29,13 @@ const ProductImages = ({ images }: { images: string[] }) => {
               current === index && "border-orange-500",
             )}
           >
-            <Image src={image} alt={image} width={100} height={100} />
+            <Image
+              src={image}
+              alt={image}
+              width={100}
+              height={100}
+              style={{ width: "100%", height: "auto" }}
+            />
           </div>
         ))}
       </div>

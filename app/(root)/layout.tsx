@@ -1,6 +1,7 @@
 import Footer from "@/components/Footer";
 import Header from "@/components/shared/header/Header";
 import { Metadata } from "next";
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
   title: "HOME",

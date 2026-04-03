@@ -118,6 +118,25 @@ const sampleData = {
       isFeatured: true,
       banner: null,
     },
+    {
+      name: "Nendoroid Hatsune Miku V3",
+      slug: "nendoroid-hatsune-miku-v3",
+      category: "Nendroid",
+      description:
+        "Hatsune Miku V3, who can sing any genre of music you wish, is now a Nendoroid!",
+      images: [
+        "/images/sample-products/miku-1.jpg",
+        "/images/sample-products/miku-2.jpg",
+        "/images/sample-products/miku-3.jpg",
+      ],
+      price: 49.99,
+      brand: "Good Smile Company",
+      rating: 4.5,
+      numReviews: 10,
+      stock: 5,
+      isFeatured: true,
+      banner: null,
+    },
   ],
 };
 

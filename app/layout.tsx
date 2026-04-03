@@ -5,6 +5,7 @@ import "@/app/_styles/globals.css";
 import { APP_NAME } from "@/lib/constants";
 import { APP_DESCRIPTION } from "@/lib/constants";
 import { ThemeProvider } from "./context/ThemeProvider";
+import { Toaster } from "@/components/ui/sonner";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -33,6 +34,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           {children}
+          <Toaster position="bottom-right" richColors expand={true} />
         </ThemeProvider>
       </body>
     </html>

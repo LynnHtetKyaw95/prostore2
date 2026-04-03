@@ -1,7 +1,7 @@
+import AddToCart from "@/app/features/cart/AddToCart";
 import ProductImages from "@/app/features/products/ProductImages";
 import ProductPrice from "@/app/features/products/ProductPrice";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { prisma } from "@/db/prisma";
 import { getProductBySlug } from "@/lib/actions/productAction";
@@ -82,7 +82,16 @@ const ProductDetailPage = async ({
 
                 {product.stock > 0 && (
                   <div className="flex-center">
-                    <Button className="w-full mt-4">Add to Cart</Button>
+                    <AddToCart
+                      item={{
+                        productId: product.id,
+                        name: product.name,
+                        slug: product.slug,
+                        price: product.price,
+                        qty: 1,
+                        image: product.images![0],
+                      }}
+                    />
                   </div>
                 )}
               </CardContent>

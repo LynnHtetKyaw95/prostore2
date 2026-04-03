@@ -4,6 +4,7 @@ import ProductPrice from "@/app/features/products/ProductPrice";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { prisma } from "@/db/prisma";
+import { getMyCart } from "@/lib/actions/cartAction";
 import { getProductBySlug } from "@/lib/actions/productAction";
 import { notFound } from "next/navigation";
 
@@ -29,6 +30,8 @@ const ProductDetailPage = async ({
   if (!product) {
     return notFound();
   }
+
+  const cart = await getMyCart();
 
   return (
     <>
@@ -83,6 +86,7 @@ const ProductDetailPage = async ({
                 {product.stock > 0 && (
                   <div className="flex-center">
                     <AddToCart
+                      cart={cart}
                       item={{
                         productId: product.id,
                         name: product.name,

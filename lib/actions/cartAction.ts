@@ -210,7 +210,7 @@ export async function removeItemFromCart(productId: string) {
       },
     });
 
-    revalidatePath(`/product/${[product.slug]}`);
+    revalidatePath(`/product/${product.slug}`);
 
     return {
       success: true,

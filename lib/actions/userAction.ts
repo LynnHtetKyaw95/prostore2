@@ -6,6 +6,7 @@ import { prisma } from "@/db/prisma";
 import { hashSync } from "bcrypt-ts-edge";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { formatErrors } from "../utils";
+import { revalidatePath } from "next/cache";
 
 // Sign in the user with credentials
 export async function signInWithCredentials(
@@ -18,12 +19,12 @@ export async function signInWithCredentials(
       password: formData.get("password"),
     });
 
-    await signIn("credentials", { ...user, callbackUrl: "/" });
+    await signIn("credentials", { ...user, redirect: false });
 
     return { success: true, message: "Signed in successfully" };
   } catch (error) {
     if (isRedirectError(error)) {
-      throw error;
+      return { success: true, message: "Signed in successfully" };
     }
 
     return { success: false, message: "Invalid email or password" };

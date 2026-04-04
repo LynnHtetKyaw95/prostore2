@@ -1,5 +1,8 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { getSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
-import { auth } from "@/auth";
 import Link from "next/link";
 import { UserIcon } from "lucide-react";
 import {
@@ -9,10 +12,29 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import SignOutUser from "@/app/features/auth/SignOutUser";
+import { SignOutButton } from "./SignOutButton";
 
-const UserButton = async () => {
-  const session = await auth();
+const UserButton = () => {
+  const [session, setSession] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchSession = async () => {
+      const sessionData = await getSession();
+      setSession(sessionData);
+      setLoading(false);
+    };
+
+    fetchSession();
+  }, []);
+
+  // if (loading) {
+  //   return (
+  //     <Button variant="ghost" className="w-8 h-8 rounded-full ml-2">
+  //       ...
+  //     </Button>
+  //   );
+  // }
 
   if (!session) {
     return (
@@ -52,7 +74,7 @@ const UserButton = async () => {
               </div>
             </DropdownMenuLabel>
             <DropdownMenuItem>
-              <SignOutUser />
+              <SignOutButton />
             </DropdownMenuItem>
           </div>
         </DropdownMenuContent>

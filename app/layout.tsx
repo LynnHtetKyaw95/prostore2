@@ -5,6 +5,7 @@ import "@/app/_styles/globals.css";
 import { APP_NAME } from "@/lib/constants";
 import { APP_DESCRIPTION } from "@/lib/constants";
 import { ThemeProvider } from "./context/ThemeProvider";
+import { SessionProvider } from "./context/SessionProvider";
 import { Toaster } from "@/components/ui/sonner";
 
 const inter = Inter({
@@ -27,15 +28,17 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.className}`}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="light"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {children}
-          <Toaster position="bottom-right" richColors expand={true} />
-        </ThemeProvider>
+        <SessionProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="light"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+            <Toaster position="bottom-right" richColors expand={true} />
+          </ThemeProvider>
+        </SessionProvider>
       </body>
     </html>
   );

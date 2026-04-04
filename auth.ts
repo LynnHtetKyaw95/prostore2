@@ -61,12 +61,11 @@ export const config = {
   callbacks: {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     async session({ session, user, trigger, token }: any) {
-      // Set the use id from token
+      // Set the user id from token
       session.user.id = token.sub;
       session.user.role = token.role;
       session.user.name = token.name;
-
-      // console.log(token);
+      session.user.email = token.email;
 
       // if there is an update, set the user name
       if (trigger === "update") {
@@ -79,6 +78,7 @@ export const config = {
       // Assign user fields to token
       if (user) {
         token.role = user.role;
+        token.email = user.email;
 
         // If user has no name then use the email
         if (user.name === "NO_NAME") {
@@ -89,6 +89,8 @@ export const config = {
             where: { id: user.id },
             data: { name: token.name },
           });
+        } else {
+          token.name = user.name;
         }
       }
 

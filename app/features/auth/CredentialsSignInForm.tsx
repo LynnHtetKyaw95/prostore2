@@ -10,6 +10,8 @@ import { useFormStatus } from "react-dom";
 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 const SignInButton = () => {
   const { pending } = useFormStatus();
@@ -29,6 +31,14 @@ const CredentialsSignInForm = () => {
 
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") || "/";
+  const router = useRouter();
+
+  useEffect(() => {
+    if (data.success) {
+      router.refresh();
+      router.push(callbackUrl);
+    }
+  }, [data.success, router, callbackUrl]);
 
   return (
     <form action={action} className="mt-6">

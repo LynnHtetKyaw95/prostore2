@@ -10,4 +10,5 @@ const SignOutUser = () => {
     </form>
   );
 };
+
 export default SignOutUser;

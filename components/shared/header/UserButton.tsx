@@ -15,26 +15,17 @@ import {
 import { SignOutButton } from "./SignOutButton";
 
 const UserButton = () => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [session, setSession] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchSession = async () => {
       const sessionData = await getSession();
       setSession(sessionData);
-      setLoading(false);
     };
 
     fetchSession();
   }, []);
-
-  // if (loading) {
-  //   return (
-  //     <Button variant="ghost" className="w-8 h-8 rounded-full ml-2">
-  //       ...
-  //     </Button>
-  //   );
-  // }
 
   if (!session) {
     return (

@@ -6,12 +6,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { formatNumberWithDecimal } from "@/lib/utils";
+import { formatCurrency } from "@/lib/utils";
 import { Cart } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
 import RemoveItemButton from "./RemoveItemButton";
 import AddItemButton from "./AddItemButton";
+import SubtotalCard from "./SubtotalCard";
 
 const CartTable = ({ cart }: { cart?: Cart }) => {
   return (
@@ -25,7 +26,7 @@ const CartTable = ({ cart }: { cart?: Cart }) => {
           </p>
         </div>
       ) : (
-        <div className="grid md:grid-cols-4 md:gap-6">
+        <div className="grid md:grid-cols-4 md:gap-10">
           <div className="overflow-x-auto md:col-span-3">
             <Table>
               <TableHeader>
@@ -59,13 +60,15 @@ const CartTable = ({ cart }: { cart?: Cart }) => {
                       <AddItemButton item={item} />
                     </TableCell>
                     <TableCell className="text-right">
-                      ${formatNumberWithDecimal(Number(item.price))}
+                      {formatCurrency(item.price)}
                     </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
             </Table>
           </div>
+
+          <SubtotalCard cart={cart} />
         </div>
       )}
     </>

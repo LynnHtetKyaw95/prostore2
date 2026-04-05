@@ -4,6 +4,8 @@ import {
   insertCartSchema,
   cartItemSchema,
   shippingAddressSchema,
+  signInFormSchema,
+  signUpFormSchema,
 } from "@/lib/zodValidator";
 
 export type Product = z.infer<typeof insertProductSchema> & {
@@ -18,3 +20,11 @@ export type Cart = z.infer<typeof insertCartSchema>;
 export type CartItem = z.infer<typeof cartItemSchema>;
 
 export type ShippingAddress = z.infer<typeof shippingAddressSchema>;
+
+export type SignInInput = z.infer<typeof signInFormSchema> & {
+  callbackUrl?: string;
+};
+
+export type SignUpInput = z.infer<typeof signUpFormSchema> & {
+  callbackUrl?: string;
+};

@@ -6,27 +6,26 @@ import { prisma } from "@/db/prisma";
 import { hashSync } from "bcrypt-ts-edge";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { formatErrors } from "../utils";
+import { SignInInput, SignUpInput } from "@/types";
 
 // Sign in the user with credentials
-export async function signInWithCredentials(
-  prevState: unknown,
-  formData: FormData,
-) {
+export async function signInWithCredentials(data: SignInInput) {
   try {
-    const user = signInFormSchema.parse({
-      email: formData.get("email"),
-      password: formData.get("password"),
-    });
+    const user = signInFormSchema.parse(data);
 
-    await signIn("credentials", { ...user, redirect: false });
+    await signIn("credentials", {
+      ...user,
+      redirect: false,
+      callbackUrl: data.callbackUrl,
+    });
 
     return { success: true, message: "Signed in successfully" };
   } catch (error) {
     if (isRedirectError(error)) {
-      return { success: true, message: "Signed in successfully" };
+      throw error;
     }
 
-    return { success: false, message: "Invalid email or password" };
+    return { success: false, message: formatErrors(error) };
   }
 }
 
@@ -36,14 +35,9 @@ export async function signOutUser() {
 }
 
 // Sign user up
-export async function signUpUser(prevState: unknown, formData: FormData) {
+export async function signUpUser(data: SignUpInput) {
   try {
-    const user = signUpFormSchema.parse({
-      name: formData.get("name"),
-      email: formData.get("email"),
-      password: formData.get("password"),
-      confirmPassword: formData.get("confirmPassword"),
-    });
+    const user = signUpFormSchema.parse(data);
 
     const plainPassword = user.password;
 

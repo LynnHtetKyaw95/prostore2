@@ -6,9 +6,14 @@ import { Card, CardContent } from "@/components/ui/card";
 import { prisma } from "@/db/prisma";
 import { getMyCart } from "@/lib/actions/cartAction";
 import { getProductBySlug } from "@/lib/actions/productAction";
+import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 export const revalidate = 60;
+
+export const metadata: Metadata = {
+  title: "Product",
+};
 
 export async function generateStaticParams() {
   const products = await prisma.product.findMany({

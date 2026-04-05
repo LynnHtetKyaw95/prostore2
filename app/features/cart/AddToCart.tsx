@@ -7,11 +7,16 @@ import { Plus, Minus, Loader } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import { toast } from "sonner";
+import AddItemButton from "./AddItemButton";
+import RemoveItemButton from "./RemoveItemButton";
 
 const AddToCart = ({ item, cart }: { item: CartItem; cart?: Cart }) => {
+  const [isPending, startTransition] = useTransition();
   const router = useRouter();
 
-  const [isPending, startTransition] = useTransition();
+  // Check if item is in cart
+  const existItem =
+    cart && cart.items.find((x) => x.productId === item.productId);
 
   async function handleAddToCart() {
     startTransition(async function () {
@@ -32,47 +37,13 @@ const AddToCart = ({ item, cart }: { item: CartItem; cart?: Cart }) => {
     });
   }
 
-  async function handleRemoveItemFromCart() {
-    startTransition(async function () {
-      const res = await removeItemFromCart(item.productId);
-
-      if (!res.success) {
-        toast.error(res.message);
-        return;
-      }
-
-      toast.success(res.message);
-      return;
-    });
-  }
-
-  // Check if item is in cart
-  const existItem =
-    cart && cart.items.find((x) => x.productId === item.productId);
-
   return existItem ? (
     <div className="mt-4 flex items-center gap-2">
-      <Button
-        type="button"
-        variant={"outline"}
-        onClick={handleRemoveItemFromCart}
-      >
-        {isPending ? (
-          <Loader className="w-4 h-4 animate-spin" />
-        ) : (
-          <Minus className="w-4 h-4" />
-        )}
-      </Button>
+      <RemoveItemButton item={existItem} />
 
       <span className="px-2">{existItem.qty}</span>
 
-      <Button type="button" variant={"outline"} onClick={handleAddToCart}>
-        {isPending ? (
-          <Loader className="w-4 h-4 animate-spin" />
-        ) : (
-          <Plus className="w-4 h-4" />
-        )}
-      </Button>
+      <AddItemButton item={existItem} />
     </div>
   ) : (
     <Button className="w-full mt-4" type="button" onClick={handleAddToCart}>

@@ -20,3 +20,11 @@ export const signUpDefaultValues = {
   password: "",
   confirmPassword: "",
 };
+
+export const shippingAddressDefaultValues = {
+  fullName: "Ookami Mio",
+  streetAddress: "123 Sakura Street",
+  city: "Tokyo",
+  postalCode: "12345",
+  country: "Japan",
+};

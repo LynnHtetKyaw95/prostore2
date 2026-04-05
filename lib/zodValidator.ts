@@ -44,7 +44,7 @@ export const signUpFormSchema = z
     path: ["confirmPassword"],
   });
 
-// Schema for Cart
+// Schema for item in Cart
 export const cartItemSchema = z.object({
   productId: z.string().min(1, "Product is required"),
   name: z.string().min(1, "Name is required"),
@@ -54,6 +54,7 @@ export const cartItemSchema = z.object({
   price: currency,
 });
 
+// Schema for Cart
 export const insertCartSchema = z.object({
   items: z.array(cartItemSchema),
   itemsPrice: currency,
@@ -62,4 +63,15 @@ export const insertCartSchema = z.object({
   taxPrice: currency,
   sessionCartId: z.string().min(1, "Session cart id is required"),
   userId: z.string().optional().nullable(), // guest can be add items even without sign in
+});
+
+// Schema for shipping address
+export const shippingAddressSchema = z.object({
+  fullName: z.string().min(1, "Full name is required"),
+  streetAddress: z.string().min(1, "Address is required"),
+  city: z.string().min(1, "City is required"),
+  postalCode: z.string().min(1, "Postal code name is required"),
+  country: z.string().min(1, "Country is required"),
+  lat: z.number().optional(),
+  lng: z.number().optional,
 });

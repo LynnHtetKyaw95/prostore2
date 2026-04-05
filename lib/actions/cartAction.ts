@@ -4,7 +4,7 @@ import { cookies } from "next/headers";
 
 import { CartItem } from "@/types";
 import { convertToPlainObject, formatErrors, round2 } from "../utils";
-import { getUserId } from "./userAction";
+import { getUser } from "./userAction";
 import { prisma } from "@/db/prisma";
 import { cartItemSchema, insertCartSchema } from "../zodValidator";
 import { revalidatePath } from "next/cache";
@@ -40,7 +40,7 @@ export async function getSessionCartId() {
 export async function addItemToCart(data: CartItem) {
   try {
     const [userId, sessionCartId] = await Promise.all([
-      getUserId(),
+      getUser(),
       getSessionCartId(),
     ]);
 
@@ -135,7 +135,7 @@ export async function addItemToCart(data: CartItem) {
 
 export async function getMyCart() {
   const [userId, sessionCartId] = await Promise.all([
-    getUserId(),
+    getUser(),
     getSessionCartId(),
   ]);
 

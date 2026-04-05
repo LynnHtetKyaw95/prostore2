@@ -1,3 +1,4 @@
+import Heading from "@/components/Heading";
 import ProductList from "../features/products/ProductList";
 import { Suspense } from "react";
 
@@ -6,7 +7,7 @@ export const revalidate = 60;
 const HomePage = () => {
   return (
     <div className="space-y-8">
-      <h2 className="h2-bold">Newest Arrivals</h2>
+      <Heading text="Newest Arrivals" />
       <Suspense fallback={<p>Loading...</p>}>
         <ProductList />
       </Suspense>

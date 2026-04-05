@@ -13,11 +13,12 @@ import Link from "next/link";
 import RemoveItemButton from "./RemoveItemButton";
 import AddItemButton from "./AddItemButton";
 import SubtotalCard from "./SubtotalCard";
+import Heading from "@/components/Heading";
 
 const CartTable = ({ cart }: { cart?: Cart }) => {
   return (
     <>
-      <h1 className="py-4 h2-bold">Shopping Cart</h1>
+      <Heading text="Shopping Cart" />
 
       {!cart || cart.items.length === 0 ? (
         <div>

@@ -73,5 +73,5 @@ export const shippingAddressSchema = z.object({
   postalCode: z.string().min(1, "Postal code name is required"),
   country: z.string().min(1, "Country is required"),
   lat: z.number().optional(),
-  lng: z.number().optional,
+  lng: z.number().optional(),
 });

@@ -1,12 +1,16 @@
 "use server";
 
-import { signInFormSchema, signUpFormSchema } from "../zodValidator";
+import {
+  shippingAddressSchema,
+  signInFormSchema,
+  signUpFormSchema,
+} from "../zodValidator";
 import { auth, signIn, signOut } from "@/auth";
 import { prisma } from "@/db/prisma";
 import { hashSync } from "bcrypt-ts-edge";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
 import { formatErrors } from "../utils";
-import { SignInInput, SignUpInput } from "@/types";
+import { ShippingAddress, SignInInput, SignUpInput } from "@/types";
 
 // Sign in the user with credentials
 export async function signInWithCredentials(data: SignInInput) {
@@ -85,4 +89,26 @@ export async function getUserById(userId: string) {
   }
 
   return user;
+}
+
+// Update the user's address
+export async function updateUserAddress(data: ShippingAddress) {
+  try {
+    const user = await getUser();
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    const address = shippingAddressSchema.parse(data);
+
+    await prisma.user.update({
+      where: { id: user },
+      data: { address },
+    });
+
+    return { success: true, message: "User updated successfully" };
+  } catch (error) {
+    return { success: false, message: formatErrors(error) };
+  }
 }

@@ -14,6 +14,8 @@ import FormField from "@/components/FormField";
 import { Button } from "@/components/ui/button";
 import { useTransition } from "react";
 import { ArrowRight, Loader } from "lucide-react";
+import { updateUserAddress } from "@/lib/actions/userAction";
+import { toast } from "sonner";
 
 const ShippingAddressForm = ({ address }: { address: ShippingAddress }) => {
   const router = useRouter();
@@ -32,8 +34,17 @@ const ShippingAddressForm = ({ address }: { address: ShippingAddress }) => {
   } = form;
 
   function onSubmit(values: ShippingAddress) {
-    console.log(values);
-    return;
+    startTransition(async () => {
+      const res = await updateUserAddress(values);
+
+      if (!res.success) {
+        toast.error(res.message);
+
+        return;
+      }
+
+      router.push("/payment-method");
+    });
   }
 
   return (
@@ -103,4 +114,5 @@ const ShippingAddressForm = ({ address }: { address: ShippingAddress }) => {
     </>
   );
 };
+
 export default ShippingAddressForm;

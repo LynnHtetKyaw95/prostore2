@@ -28,3 +28,10 @@ export const shippingAddressDefaultValues = {
   postalCode: "",
   country: "",
 };
+
+export const CHECK_OUT_STEPS = [
+  "User Login",
+  "Shipping Address",
+  "Payment Method",
+  "Place Order",
+];

@@ -1,7 +1,6 @@
 import Footer from "@/components/Footer";
-import Header from "@/components/shared/header/Header";
+import Header from "@/components/header/Header";
 import { Metadata } from "next";
-import { Toaster } from "sonner";
 import { APP_NAME } from "@/lib/constants";
 
 export const metadata: Metadata = {

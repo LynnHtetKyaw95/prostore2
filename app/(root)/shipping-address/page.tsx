@@ -1,4 +1,5 @@
 import ShippingAddressForm from "@/app/features/shipping/ShippingAddressForm";
+import CheckOutSteps from "@/components/CheckOutSteps";
 import { getMyCart } from "@/lib/actions/cartAction";
 import { getUser, getUserById } from "@/lib/actions/userAction";
 import { ShippingAddress } from "@/types";
@@ -26,6 +27,7 @@ const ShippingAddressPage = async () => {
 
   return (
     <>
+      <CheckOutSteps current={1} />
       <ShippingAddressForm address={user.address as ShippingAddress} />
     </>
   );

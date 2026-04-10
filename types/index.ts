@@ -7,6 +7,8 @@ import {
   signInFormSchema,
   signUpFormSchema,
   paymentMethodSchema,
+  insertOrderItemSchema,
+  insertOrderSchema,
 } from "@/lib/zodValidator";
 
 export type Product = z.infer<typeof insertProductSchema> & {
@@ -31,3 +33,16 @@ export type SignUpInput = z.infer<typeof signUpFormSchema> & {
 };
 
 export type PaymentMethod = z.infer<typeof paymentMethodSchema>;
+
+export type OrderItem = z.infer<typeof insertOrderItemSchema>;
+
+export type Order = z.infer<typeof insertOrderSchema> & {
+  id: string;
+  createdAt: Date;
+  isPaid: boolean;
+  paidAt: Date | null;
+  isDelivered: boolean;
+  deliveredAt: Date | null;
+  orderItems: OrderItem[];
+  user: { name: string; email: string };
+};

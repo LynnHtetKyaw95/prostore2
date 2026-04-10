@@ -33,7 +33,7 @@ const ShippingAddressForm = ({ address }: { address: ShippingAddress }) => {
     formState: { errors },
   } = form;
 
-  function onSubmit(values: ShippingAddress) {
+  async function onSubmit(values: ShippingAddress) {
     startTransition(async () => {
       const res = await updateUserAddress(values);
 

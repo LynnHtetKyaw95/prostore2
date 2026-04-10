@@ -81,7 +81,11 @@ export async function signUpUser(data: SignUpInput) {
 export async function getUser() {
   const session = await auth();
 
-  return session?.user?.id ? (session.user.id as string) : undefined;
+  if (!session?.user?.id) {
+    throw new Error("User not found");
+  }
+
+  return session.user.id;
 }
 
 // Get user id

@@ -36,9 +36,12 @@ export const CHECK_OUT_STEPS = [
   "Place Order",
 ];
 
-export const PAYMENT_METHODS = process.env.PAYMENT_METHODS
-  ? process.env.PAYMENT_METHODS.split(". ")
-  : ["PayPal", "Stripe", "CashOnDelivery"];
+// export const PAYMENT_METHODS = ["PayPal", "Stripe", "CashOnDelivery"];
 
-export const DEFAULT_PAYMENT_METHOD =
-  process.env.DEFAULT_PAYMENT_METHOD || "PayPal";
+export const PAYMENT_METHODS = [
+  { label: "PayPal", value: "paypal" },
+  { label: "Stripe", value: "stripe" },
+  { label: "Cash On Delivery", value: "cashOnDelivery" },
+];
+
+export const DEFAULT_PAYMENT_METHOD = "paypal";

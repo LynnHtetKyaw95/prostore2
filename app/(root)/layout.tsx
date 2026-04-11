@@ -2,7 +2,6 @@ import Footer from "@/components/Footer";
 import Header from "@/components/header/Header";
 import { Metadata } from "next";
 import { APP_NAME } from "@/lib/constants";
-import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: {

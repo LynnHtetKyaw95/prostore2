@@ -1,4 +1,5 @@
 import CartTable from "@/app/features/cart/CartTable";
+import PlaceOrderForm from "@/app/features/order/PlaceOrderForm";
 import CheckOutSteps from "@/components/CheckOutSteps";
 import Heading from "@/components/Heading";
 import { Button } from "@/components/ui/button";
@@ -143,6 +144,8 @@ const PlaceOrderPage = async () => {
                   {formatCurrency(cart.totalPrice)}
                 </p>
               </div>
+
+              <PlaceOrderForm />
             </CardContent>
           </Card>
         </div>

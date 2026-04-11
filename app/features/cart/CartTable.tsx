@@ -6,7 +6,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { cn, formatCurrency } from "@/lib/utils";
+import { formatCurrency } from "@/lib/utils";
 import { Cart } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
@@ -16,7 +16,7 @@ import SubtotalCard from "./SubtotalCard";
 import Heading from "@/components/Heading";
 
 interface CartTableProps {
-  cart: Cart;
+  cart: Cart | undefined;
 }
 
 const CartTable = ({ cart }: CartTableProps) => {

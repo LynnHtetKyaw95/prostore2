@@ -68,7 +68,9 @@ const OrderDetailsTable = ({ order }: OrderDetailsTableProps) => {
             taxPrice={taxPrice}
             shippingPrice={shippingPrice}
             totalPrice={totalPrice}
-          />
+          >
+            PAYPAL FORM
+          </OrderItemsPriceDetailCard>
         </div>
       </div>
     </>

@@ -19,9 +19,10 @@ interface OrderItemsCardProps {
     qty: number;
     price: string;
   }[];
+  children?: React.ReactNode;
 }
 
-const OrderItemsCard = ({ items }: OrderItemsCardProps) => {
+const OrderItemsCard = ({ items, children }: OrderItemsCardProps) => {
   return (
     <Card className="mt-4">
       <CardContent className="p-4 gap-4">
@@ -61,6 +62,7 @@ const OrderItemsCard = ({ items }: OrderItemsCardProps) => {
             ))}
           </TableBody>
         </Table>
+        {children}
       </CardContent>
     </Card>
   );

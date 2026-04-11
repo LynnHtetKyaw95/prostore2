@@ -32,7 +32,8 @@ const ShippingButton = () => {
   );
 };
 
-const SubtotalCard = ({ cart }: { cart: Cart }) => {
+const SubtotalCard = ({ cart }: { cart: Cart | undefined }) => {
+  if (!cart) return null;
   return (
     <Card>
       <CardContent className="p-4 gap-4">

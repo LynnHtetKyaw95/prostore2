@@ -6,7 +6,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { formatCurrency } from "@/lib/utils";
+import { cn, formatCurrency } from "@/lib/utils";
 import { Cart } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
@@ -15,7 +15,11 @@ import AddItemButton from "./AddItemButton";
 import SubtotalCard from "./SubtotalCard";
 import Heading from "@/components/Heading";
 
-const CartTable = ({ cart }: { cart?: Cart }) => {
+interface CartTableProps {
+  cart: Cart;
+}
+
+const CartTable = ({ cart }: CartTableProps) => {
   return (
     <>
       <Heading text="Shopping Cart" />

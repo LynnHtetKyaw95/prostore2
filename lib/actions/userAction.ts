@@ -81,6 +81,10 @@ export async function signUpUser(data: SignUpInput) {
 export async function getUser() {
   const session = await auth();
 
+  if (!session) {
+    throw new Error("User is not authenticated");
+  }
+
   if (!session?.user?.id) {
     throw new Error("User not found");
   }

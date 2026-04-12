@@ -13,7 +13,7 @@ export const paypal = {
       },
       body: JSON.stringify({
         intent: "CAPTURE",
-        purchase_unit: [
+        purchase_units: [
           {
             amount: {
               currency_code: "USD",

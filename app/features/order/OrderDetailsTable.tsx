@@ -9,15 +9,7 @@ import PaymentMethodCard from "./PaymentMethodCard";
 import ShippingAddressCard from "./ShippingAddressCard";
 import OrderItemsCard from "./OrderItemsCard";
 import OrderItemsPriceDetailCard from "./OrderItemsPriceDetailCard";
-import {
-  PayPalButtons,
-  PayPalScriptProvider,
-  usePayPalScriptReducer,
-} from "@paypal/react-paypal-js";
-import {
-  createPayPalOrder,
-  approvePayPalOrder,
-} from "@/lib/actions/orderAction";
+
 import PayPalPaymentForm from "./PayPalPaymentForm";
 
 interface OrderDetailsTableProps {

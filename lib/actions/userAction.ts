@@ -17,6 +17,7 @@ import {
   SignInInput,
   SignUpInput,
 } from "@/types";
+import { PAGE_SIZE } from "../constants";
 
 // Sign in the user with credentials
 export async function signInWithCredentials(data: SignInInput) {
@@ -152,6 +153,54 @@ export async function updateUserPaymentMethod(data: PaymentMethod) {
       success: true,
       message: "User updated successfully",
     };
+  } catch (error) {
+    return { success: false, message: formatErrors(error) };
+  }
+}
+
+// Get user's orders
+export async function getUserOrders({
+  limit = PAGE_SIZE,
+  page,
+}: {
+  limit?: number;
+  page: number;
+}) {
+  const userId = await getUser();
+
+  const data = await prisma.order.findMany({
+    where: { userId: userId },
+    orderBy: { createdAt: "desc" },
+    take: limit,
+    skip: (page - 1) * limit,
+  });
+
+  const dataCount = await prisma.order.count({
+    where: { userId: userId },
+  });
+
+  return { data, totalPages: Math.ceil(dataCount / limit) };
+}
+
+// Update the user profile
+export async function updateProfile(user: { name: string; email: string }) {
+  try {
+    const userId = await getUser();
+
+    const currentUser = await prisma.user.findFirst({
+      where: { id: userId },
+    });
+
+    if (!currentUser) {
+      throw new Error("User not found");
+    }
+
+    await prisma.user.update({
+      where: { id: currentUser.id },
+      data: { name: user.name },
+    });
+
+    return { success: true, message: "User updated successfully" };
   } catch (error) {
     return { success: false, message: formatErrors(error) };
   }

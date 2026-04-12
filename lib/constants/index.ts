@@ -45,3 +45,5 @@ export const PAYMENT_METHODS = [
 ];
 
 export const DEFAULT_PAYMENT_METHOD = "paypal";
+
+export const PAGE_SIZE = Number(process.env.PAGE_SIZE) || 10;

@@ -15,8 +15,10 @@ type FormFieldProps<T extends FieldValues> = {
   label: string;
   register: UseFormRegister<T>;
   errors: FieldErrors<T>;
+  defaultValue?: string;
   placeholder?: string;
   type?: string;
+  disable?: boolean;
 };
 
 export default function FormField<T extends FieldValues>({
@@ -25,6 +27,8 @@ export default function FormField<T extends FieldValues>({
   register,
   errors,
   placeholder,
+  defaultValue,
+  disable,
   type = "text",
 }: FormFieldProps<T>) {
   const error = errors[name];
@@ -37,6 +41,8 @@ export default function FormField<T extends FieldValues>({
         id={name}
         type={type}
         placeholder={placeholder}
+        defaultValue={defaultValue}
+        disabled={disable}
         {...register(name)}
       />
 

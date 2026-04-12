@@ -65,6 +65,16 @@ const UserButton = () => {
               </div>
             </DropdownMenuLabel>
             <DropdownMenuItem>
+              <Link href={"/user/profile"} className="w-full">
+                User Profile
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <Link href={"/user/orders"} className="w-full">
+                Order History
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
               <SignOutButton />
             </DropdownMenuItem>
           </div>

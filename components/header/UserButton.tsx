@@ -74,6 +74,14 @@ const UserButton = () => {
                 Order History
               </Link>
             </DropdownMenuItem>
+
+            {session?.user?.role === "admin" && (
+              <DropdownMenuItem>
+                <Link href={"/admin/overview"} className="w-full">
+                  Admin
+                </Link>
+              </DropdownMenuItem>
+            )}
             <DropdownMenuItem>
               <SignOutButton />
             </DropdownMenuItem>
@@ -83,4 +91,5 @@ const UserButton = () => {
     </div>
   );
 };
+
 export default UserButton;

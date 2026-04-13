@@ -54,8 +54,8 @@ const UserProfileForm = ({
 
       toast.success(res.message);
 
-      router.refresh();
-      router.push("/user/orders");
+      // router.refresh();
+      router.replace("/user/profile");
     });
   }
 

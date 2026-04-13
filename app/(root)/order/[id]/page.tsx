@@ -1,4 +1,5 @@
 import OrderDetailsTable from "@/app/features/order/OrderDetailsTable";
+import { auth } from "@/auth";
 import { getOrderById } from "@/lib/actions/orderAction";
 import { ShippingAddress } from "@/types";
 import { Metadata } from "next";
@@ -21,6 +22,8 @@ const OrderDetailsPage = async ({
     notFound();
   }
 
+  const session = await auth();
+
   return (
     <>
       <OrderDetailsTable
@@ -29,6 +32,7 @@ const OrderDetailsPage = async ({
           shippingAddress: order.shippingAddress as ShippingAddress,
         }}
         paypalClientId={process.env.PAYPAL_CLIENT_ID || "sb"}
+        isAdmin={session?.user?.role === "admin" || false}
       />
     </>
   );

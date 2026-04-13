@@ -1,5 +1,4 @@
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -8,15 +7,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 import { deleteOrder, getAllOrders } from "@/lib/actions/orderAction";
 import { formatCurrency, formatDateTime, formatUUID } from "@/lib/utils";
-import { InfoIcon } from "lucide-react";
-import Link from "next/link";
 import DeleteButtonWithDialog from "./DeleteButtonWithDialog";
 import DetailsButton from "./DetailsButton";
 
@@ -34,6 +26,7 @@ const AdminOrdersTable = async ({ orders }: Props) => {
           <TableHead>ID</TableHead>
           <TableHead>DATE</TableHead>
           <TableHead>TOTAL</TableHead>
+          <TableHead>METHOD</TableHead>
           <TableHead>PAID</TableHead>
           <TableHead>DELIVERED</TableHead>
           <TableHead className="text-center">ACTION</TableHead>
@@ -46,6 +39,14 @@ const AdminOrdersTable = async ({ orders }: Props) => {
             <TableCell>{formatUUID(order.id)}</TableCell>
             <TableCell>{formatDateTime(order.createdAt).dateTime}</TableCell>
             <TableCell>{formatCurrency(order.totalPrice)}</TableCell>
+            <TableCell>
+              {" "}
+              {order.paymentMethod === "cashOnDelivery"
+                ? "Cash on Delivery"
+                : order.paymentMethod === "paypal"
+                  ? "PayPal"
+                  : ""}
+            </TableCell>
             <TableCell>
               {order.isPaid && order.paidAt ? (
                 formatDateTime(order.paidAt).dateTime

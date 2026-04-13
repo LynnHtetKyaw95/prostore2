@@ -11,15 +11,19 @@ import OrderItemsCard from "./OrderItemsCard";
 import OrderItemsPriceDetailCard from "./OrderItemsPriceDetailCard";
 
 import PayPalPaymentForm from "./PayPalPaymentForm";
+import MarkAsPaidButton from "./MarkAsPaidButton";
+import MarkAsDeliveredButton from "./MarkAsDeliveredButton";
 
 interface OrderDetailsTableProps {
   order: Order;
   paypalClientId: string;
+  isAdmin: boolean;
 }
 
 const OrderDetailsTable = ({
   order,
   paypalClientId,
+  isAdmin,
 }: OrderDetailsTableProps) => {
   const {
     id,
@@ -81,6 +85,15 @@ const OrderDetailsTable = ({
                 paypalClientId={paypalClientId}
                 order={order}
               />
+            )}
+
+            {/* Cash on Delivery */}
+            {isAdmin && !isPaid && paymentMethod === "cashOnDelivery" && (
+              <MarkAsPaidButton id={id} />
+            )}
+
+            {isAdmin && isPaid && !isDelivered && (
+              <MarkAsDeliveredButton id={id} />
             )}
           </OrderItemsPriceDetailCard>
         </div>

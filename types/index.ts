@@ -58,3 +58,5 @@ export type SalesDataType = {
   month: string;
   totalSales: number;
 }[];
+
+// export type UpdateProduct = z.infer<typeof updateProductSchema>;

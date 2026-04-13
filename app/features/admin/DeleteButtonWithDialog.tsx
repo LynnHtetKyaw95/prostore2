@@ -23,11 +23,13 @@ import { toast } from "sonner";
 interface DeleteButtonWithDialogProps {
   id: string;
   action: (id: string) => Promise<{ success: boolean; message: string }>;
+  text?: string;
 }
 
 const DeleteButtonWithDialog = ({
   id,
   action,
+  text = "Delete Order",
 }: DeleteButtonWithDialogProps) => {
   const [open, setOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
@@ -57,7 +59,7 @@ const DeleteButtonWithDialog = ({
         </AlertDialogTrigger>
 
         <TooltipContent>
-          <p>Delete Order</p>
+          <p>{text}</p>
         </TooltipContent>
 
         <AlertDialogContent>

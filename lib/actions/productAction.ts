@@ -1,7 +1,8 @@
 "use server";
 
-import { LATEST_PRODUCTS_LIMIT } from "../constants";
-import { convertToPlainObject } from "../utils";
+import { revalidatePath } from "next/cache";
+import { LATEST_PRODUCTS_LIMIT, PAGE_SIZE } from "../constants";
+import { convertToPlainObject, formatErrors } from "../utils";
 import { prisma } from "@/db/prisma";
 
 // const delay = (ms: number) => {
@@ -27,4 +28,54 @@ export async function getProductBySlug(slug: string) {
   });
 
   return data;
+}
+
+type getAllProductsProps = {
+  query: string;
+  limit?: number;
+  page: number;
+  category?: string;
+};
+
+// Get all products
+export async function getAllProducts({
+  query,
+  limit = PAGE_SIZE,
+  page,
+  category,
+}: getAllProductsProps) {
+  const data = await prisma.product.findMany({
+    skip: (page - 1) * limit,
+    take: limit,
+  });
+
+  const dataCount = await prisma.product.count();
+
+  return { data, totalPages: Math.ceil(dataCount / limit) };
+}
+
+// Delete Product
+export async function deleteProduct(id: string) {
+  try {
+    const productExists = await prisma.product.findFirst({
+      where: { id },
+    });
+
+    if (!productExists) {
+      throw new Error("Product is not found");
+    }
+
+    await prisma.product.delete({
+      where: { id },
+    });
+
+    revalidatePath("/admin/products");
+
+    return {
+      success: true,
+      message: "Product deleted successfully",
+    };
+  } catch (error) {
+    return { success: false, message: formatErrors(error) };
+  }
 }

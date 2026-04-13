@@ -1,9 +1,9 @@
 import Charts from "@/app/features/admin/Charts";
 import OverviewCard from "@/app/features/admin/OverviewCard";
 import RecentSales from "@/app/features/admin/RecentSales";
-import { auth } from "@/auth";
 import Heading from "@/components/Heading";
 import { getOrderSummary } from "@/lib/actions/orderAction";
+import { requireAdmin } from "@/lib/actions/userAction";
 import { formatCurrency, formatNumber } from "@/lib/utils";
 import { BadgeDollarSign, Barcode, CreditCard, User } from "lucide-react";
 import { Metadata } from "next";
@@ -13,11 +13,7 @@ export const metadata: Metadata = {
 };
 
 const AdminOverViewPage = async () => {
-  const session = await auth();
-
-  if (session?.user?.role !== "admin") {
-    throw new Error("User is not authorized");
-  }
+  await requireAdmin();
 
   const summary = await getOrderSummary();
 
@@ -27,19 +23,29 @@ const AdminOverViewPage = async () => {
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <OverviewCard title="Total Revenue" icon={BadgeDollarSign}>
-          {formatCurrency(summary.totalSales._sum.totalPrice?.toString() || 0)}
+          <span className="text-2xl font-bold">
+            {formatCurrency(
+              summary.totalSales._sum.totalPrice?.toString() || 0,
+            )}
+          </span>
         </OverviewCard>
 
         <OverviewCard title="Sales" icon={CreditCard}>
-          {formatNumber(summary.ordersCount)}
+          <span className="text-2xl font-bold">
+            {formatNumber(summary.ordersCount)}
+          </span>
         </OverviewCard>
 
         <OverviewCard title="Customers" icon={User}>
-          {formatNumber(summary.usersCount)}
+          <span className="text-2xl font-bold">
+            {formatNumber(summary.usersCount)}
+          </span>
         </OverviewCard>
 
         <OverviewCard title="Products" icon={Barcode}>
-          {formatNumber(summary.productsCount)}
+          <span className="text-2xl font-bold">
+            {formatNumber(summary.productsCount)}
+          </span>
         </OverviewCard>
       </div>
 

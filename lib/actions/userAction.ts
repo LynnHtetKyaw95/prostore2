@@ -18,17 +18,25 @@ import {
   SignUpInput,
 } from "@/types";
 import { PAGE_SIZE } from "../constants";
+import { redirect } from "next/navigation";
 
 // Sign in the user with credentials
 export async function signInWithCredentials(data: SignInInput) {
   try {
     const user = signInFormSchema.parse(data);
 
-    await signIn("credentials", {
+    const res = await signIn("credentials", {
       ...user,
       redirect: false,
       callbackUrl: data.callbackUrl,
     });
+
+    if (res?.error) {
+      return {
+        success: false,
+        message: "Invalid email or password",
+      };
+    }
 
     return { success: true, message: "Signed in successfully" };
   } catch (error) {
@@ -74,7 +82,10 @@ export async function signUpUser(data: SignUpInput) {
       throw error;
     }
 
-    return { success: false, message: formatErrors(error) };
+    return {
+      success: false,
+      message: "Something went wrong. Please try again.",
+    };
   }
 }
 
@@ -91,6 +102,17 @@ export async function getUser() {
   }
 
   return session.user.id;
+}
+
+// Get admin
+export async function requireAdmin() {
+  const session = await auth();
+
+  if (session?.user?.role !== "admin") {
+    redirect("/unauthorized");
+  }
+
+  return session;
 }
 
 // Get user id

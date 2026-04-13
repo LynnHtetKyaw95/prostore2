@@ -1,5 +1,5 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -8,17 +8,25 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { getUserOrders } from "@/lib/actions/userAction";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { deleteOrder, getAllOrders } from "@/lib/actions/orderAction";
 import { formatCurrency, formatDateTime, formatUUID } from "@/lib/utils";
+import { InfoIcon } from "lucide-react";
 import Link from "next/link";
+import DeleteButtonWithDialog from "./DeleteButtonWithDialog";
+import DetailsButton from "./DetailsButton";
 
-type OrdersArray = Awaited<ReturnType<typeof getUserOrders>>["data"];
+type OrdersArray = Awaited<ReturnType<typeof getAllOrders>>["data"];
 
 type Props = {
   orders: OrdersArray;
 };
 
-const UserOrdersTable = ({ orders }: Props) => {
+const AdminOrdersTable = async ({ orders }: Props) => {
   return (
     <Table>
       <TableHeader>
@@ -28,12 +36,12 @@ const UserOrdersTable = ({ orders }: Props) => {
           <TableHead>TOTAL</TableHead>
           <TableHead>PAID</TableHead>
           <TableHead>DELIVERED</TableHead>
-          <TableHead>ACTION</TableHead>
+          <TableHead className="text-center">ACTION</TableHead>
         </TableRow>
       </TableHeader>
 
       <TableBody>
-        {orders.map((order: any) => (
+        {orders.map((order) => (
           <TableRow key={order.id}>
             <TableCell>{formatUUID(order.id)}</TableCell>
             <TableCell>{formatDateTime(order.createdAt).dateTime}</TableCell>
@@ -57,11 +65,14 @@ const UserOrdersTable = ({ orders }: Props) => {
               )}
             </TableCell>
             <TableCell>
-              <Link href={`/order/${order.id}`}>
-                <span className="px-2 hover:text-primary transition-all duration-300">
-                  Details
-                </span>
-              </Link>
+              <div className="flex gap-2 items-center justify-center">
+                <DetailsButton
+                  href={`/order/${order.id}`}
+                  text="View Order Details"
+                />
+
+                <DeleteButtonWithDialog id={order.id} action={deleteOrder} />
+              </div>
             </TableCell>
           </TableRow>
         ))}
@@ -69,5 +80,4 @@ const UserOrdersTable = ({ orders }: Props) => {
     </Table>
   );
 };
-
-export default UserOrdersTable;
+export default AdminOrdersTable;

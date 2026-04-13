@@ -1,26 +1,31 @@
-import UserOrdersTable from "@/app/features/user/UserOrdersTable";
+import AdminOrdersTable from "@/app/features/admin/AdminOrdersTable";
 import Heading from "@/components/Heading";
 import Pagination from "@/components/Pagination";
-import { getUserOrders } from "@/lib/actions/userAction";
+import { getAllOrders } from "@/lib/actions/orderAction";
+import { requireAdmin } from "@/lib/actions/userAction";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "My Orders",
+  title: "Admin Orders",
 };
 
-const UserOrdersPage = async (props: {
+const AdminOrdersPage = async (props: {
   searchParams: Promise<{ page: string }>;
 }) => {
-  const { page } = await props.searchParams;
+  await requireAdmin();
 
-  const { data, totalPages } = await getUserOrders({ page: Number(page) || 1 });
+  const { page = "1" } = await props.searchParams;
+
+  const { data, totalPages } = await getAllOrders({
+    page: Number(page),
+  });
 
   return (
     <div className="space-y-2">
       <Heading text="Orders" />
 
       <div className="overflow-x-auto">
-        <UserOrdersTable orders={data} />
+        <AdminOrdersTable orders={data} />
       </div>
       <div className="flex justify-end mt-16">
         {totalPages > 1 && (
@@ -30,4 +35,4 @@ const UserOrdersPage = async (props: {
     </div>
   );
 };
-export default UserOrdersPage;
+export default AdminOrdersPage;

@@ -20,9 +20,10 @@ const OverviewCard = ({
         {Icon && <Icon />}
       </CardHeader>
       <CardContent>
-        <div className="text-2xl font-bold">{children}</div>
+        <div>{children}</div>
       </CardContent>
     </Card>
   );
 };
+
 export default OverviewCard;

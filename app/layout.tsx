@@ -7,6 +7,7 @@ import { APP_DESCRIPTION } from "@/lib/constants";
 import { ThemeProvider } from "./context/ThemeProvider";
 import { SessionProvider } from "./context/SessionProvider";
 import { Toaster } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -35,7 +36,7 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            {children}
+            <TooltipProvider>{children}</TooltipProvider>
             <Toaster position="bottom-right" richColors expand={true} />
           </ThemeProvider>
         </SessionProvider>

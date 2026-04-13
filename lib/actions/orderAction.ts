@@ -10,6 +10,7 @@ import { CartItem, PaymentResult, SalesDataType } from "@/types";
 import { paypal } from "../paypal";
 import { revalidatePath } from "next/cache";
 import { Prisma } from "@prisma/client";
+import { PAGE_SIZE } from "../constants";
 
 // Create order and create order items
 export async function createOrder() {
@@ -257,6 +258,7 @@ async function updateOrderToPaid({
   }
 }
 
+// ==================== Admin ====================
 // Get sales data and order summary
 export async function getOrderSummary() {
   // Get counts for each resource
@@ -300,4 +302,45 @@ export async function getOrderSummary() {
     latestSales,
     salesData,
   };
+}
+
+// Get All Orders
+export async function getAllOrders({
+  limit = PAGE_SIZE,
+  page,
+}: {
+  limit?: number;
+  page: number;
+}) {
+  const data = await prisma.order.findMany({
+    orderBy: { createdAt: "desc" },
+    take: limit,
+    skip: (page - 1) * limit,
+    include: {
+      user: {
+        select: {
+          name: true,
+        },
+      },
+    },
+  });
+
+  const dataCount = await prisma.order.count();
+
+  return { data, totalPages: Math.ceil(dataCount / limit) };
+}
+
+// Delete an Order
+export async function deleteOrder(id: string) {
+  try {
+    await prisma.order.delete({
+      where: { id },
+    });
+
+    revalidatePath("/admin/orders");
+
+    return { success: true, message: "Order deleted successfully" };
+  } catch (error) {
+    return { success: false, message: formatErrors(error) };
+  }
 }

@@ -8,11 +8,13 @@ import { insertProductSchema, updateProductSchema } from "@/lib/zodValidator";
 import { Product } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import { Resolver, useForm } from "react-hook-form";
+import { Resolver, useForm, useWatch } from "react-hook-form";
 import z from "zod";
 import slugify from "slugify";
 import { createProduct, updateProduct } from "@/lib/actions/productAction";
 import { toast } from "sonner";
+import ImageField from "@/components/ImageField";
+import FeaturedBannerField from "@/components/FeaturedBannerField";
 
 interface ProductCreateFormProps {
   type: "Create" | "Update";
@@ -39,7 +41,9 @@ const ProductCreateForm = ({
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors, isSubmitting },
+    setValue,
   } = form;
 
   async function onSubmit(values: z.infer<typeof insertProductSchema>) {
@@ -73,6 +77,21 @@ const ProductCreateForm = ({
       router.push("/admin/products");
     }
   }
+
+  const images = useWatch({
+    control,
+    name: "images",
+  });
+
+  const isFeatured = useWatch({
+    control,
+    name: "isFeatured",
+  });
+
+  const banner = useWatch({
+    control,
+    name: "banner",
+  });
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} method="POST" className="space-y-8">
@@ -164,8 +183,24 @@ const ProductCreateForm = ({
       </div>
       <div className="upload-field flex flex-col gap-5 md:flex-row mt-4">
         {/* IMAGES */}
+        <ImageField
+          label="Images"
+          images={images}
+          setValue={setValue}
+          error={errors.images}
+        />
       </div>
-      <div className="upload-field">{/* isFeatured */}</div>
+      <div className="upload-field">
+        {/* isFeatured */}
+        <FeaturedBannerField
+          setValue={setValue}
+          errors={errors}
+          isFeatured={isFeatured}
+          banner={banner}
+          nameFeatured="isFeatured"
+          nameBanner="banner"
+        />
+      </div>
 
       <div>
         <FormField

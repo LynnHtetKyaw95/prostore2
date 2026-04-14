@@ -6,6 +6,7 @@ import { convertToPlainObject, formatErrors } from "../utils";
 import { prisma } from "@/db/prisma";
 import { z } from "zod";
 import { insertProductSchema, updateProductSchema } from "../zodValidator";
+import { UTApi } from "uploadthing/server";
 
 // const delay = (ms: number) => {
 //   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -58,6 +59,8 @@ export async function getAllProducts({
 }
 
 // Delete Product
+const utapi = new UTApi();
+
 export async function deleteProduct(id: string) {
   try {
     const productExists = await prisma.product.findFirst({
@@ -66,6 +69,14 @@ export async function deleteProduct(id: string) {
 
     if (!productExists) {
       throw new Error("Product is not found");
+    }
+
+    const fileKeys = productExists.images.map((url) => {
+      return url.split("/f/")[1];
+    });
+
+    if (fileKeys.length > 0) {
+      await utapi.deleteFiles(fileKeys);
     }
 
     await prisma.product.delete({

@@ -5,6 +5,10 @@ import { Product } from "@/types";
 const ProductList = async () => {
   const latestProducts = await getLatestProducts();
 
+  if (!latestProducts?.length) {
+    return;
+  }
+
   return (
     <div className="my-10">
       {latestProducts.length > 0 ? (

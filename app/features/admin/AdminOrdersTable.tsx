@@ -25,6 +25,7 @@ const AdminOrdersTable = async ({ orders }: Props) => {
         <TableRow>
           <TableHead>ID</TableHead>
           <TableHead>DATE</TableHead>
+          <TableHead>BUYER</TableHead>
           <TableHead>TOTAL</TableHead>
           <TableHead>METHOD</TableHead>
           <TableHead>PAID</TableHead>
@@ -38,6 +39,7 @@ const AdminOrdersTable = async ({ orders }: Props) => {
           <TableRow key={order.id}>
             <TableCell>{formatUUID(order.id)}</TableCell>
             <TableCell>{formatDateTime(order.createdAt).dateTime}</TableCell>
+            <TableCell>{order.user.name}</TableCell>
             <TableCell>{formatCurrency(order.totalPrice)}</TableCell>
             <TableCell>
               {" "}

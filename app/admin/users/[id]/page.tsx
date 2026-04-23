@@ -1,5 +1,4 @@
 import UpdateUserForm from "@/app/features/admin/UpdateUserForm";
-import Heading from "@/components/Heading";
 import { getUserById, requireAdmin } from "@/lib/actions/userAction";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";

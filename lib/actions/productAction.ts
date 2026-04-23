@@ -7,6 +7,7 @@ import { prisma } from "@/db/prisma";
 import { z } from "zod";
 import { insertProductSchema, updateProductSchema } from "../zodValidator";
 import { UTApi } from "uploadthing/server";
+import { Prisma } from "@prisma/client";
 
 // const delay = (ms: number) => {
 //   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -58,7 +59,21 @@ export async function getAllProducts({
   page,
   category,
 }: getAllProductsProps) {
+  // QueryFilter
+  const queryFilter: Prisma.ProductWhereInput =
+    query && query !== "all"
+      ? {
+          name: {
+            contains: query,
+            mode: "insensitive",
+          } as Prisma.StringFilter,
+        }
+      : {};
+
   const data = await prisma.product.findMany({
+    where: {
+      ...queryFilter,
+    },
     skip: (page - 1) * limit,
     take: limit,
     orderBy: { createdAt: "desc" },

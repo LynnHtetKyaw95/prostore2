@@ -1,20 +1,18 @@
 "use client";
 
-import { ShippingAddress } from "@/types";
 import { useRouter } from "next/navigation";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { shippingAddressSchema, updateUserSchema } from "@/lib/zodValidator";
-import { shippingAddressDefaultValues, USER_ROLES } from "@/lib/constants";
+import { updateUserSchema } from "@/lib/zodValidator";
+import { USER_ROLES } from "@/lib/constants";
 import Heading from "@/components/Heading";
 import { FieldGroup } from "@/components/ui/field";
 import FormField from "@/components/FormField";
 import { Button } from "@/components/ui/button";
-import { useTransition } from "react";
 import { ArrowRight, Loader } from "lucide-react";
-import { updateUser, updateUserAddress } from "@/lib/actions/userAction";
+import { updateUser } from "@/lib/actions/userAction";
 import { toast } from "sonner";
 import FormSelect from "@/components/FormSelect";
 

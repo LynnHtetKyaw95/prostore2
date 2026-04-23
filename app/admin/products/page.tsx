@@ -1,9 +1,16 @@
 import AdminProductsTable from "@/app/features/admin/AdminProductsTable";
 import Heading from "@/components/Heading";
 import Pagination from "@/components/Pagination";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { getAllProducts } from "@/lib/actions/productAction";
+import { X } from "lucide-react";
+import { Metadata } from "next";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "Products",
+};
 
 const AdminProductsPage = async (props: {
   searchParams: Promise<{ page: string; query: string; category: string }>;
@@ -23,7 +30,17 @@ const AdminProductsPage = async (props: {
   return (
     <div className="space-y-2">
       <div className="flex-between">
-        <Heading text="Products" />
+        <div className="flex items-center gap-4">
+          <Heading text="Products" />
+          {searchText && (
+            <div className="flex items-center gap-4">
+              Filtered by <Badge>{searchText}</Badge>
+              <Link href="/admin/products">
+                <X className="w-4 h-4" />
+              </Link>
+            </div>
+          )}
+        </div>
         <Button asChild variant={"default"}>
           <Link href="/admin/products/create">Create Product</Link>
         </Button>

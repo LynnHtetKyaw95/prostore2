@@ -4,6 +4,7 @@ import Image from "next/image";
 import Menu from "@/components/header/Menu";
 import MainNav from "@/app/features/admin/MainNav";
 import { Input } from "@/components/ui/input";
+import AdminSearch from "../features/admin/AdminSearch";
 
 export default function AdminLayout({
   children,
@@ -33,13 +34,7 @@ export default function AdminLayout({
         </div>
 
         <div className="flex-1 space-y-4 p-8 pt-6 container mx-auto">
-          <div className="flex justify-end">
-            <Input
-              type="search"
-              placeholder="Search..."
-              className="md:w-25 lg:w-75"
-            />
-          </div>
+          <AdminSearch />
           {children}
         </div>
       </div>

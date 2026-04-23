@@ -62,3 +62,14 @@ export const productDefaultValues = {
   isFeatured: false,
   banner: null,
 };
+
+export const USER_ROLES = [
+  {
+    value: "admin",
+    label: "Admin",
+  },
+  {
+    value: "user",
+    label: "User",
+  },
+];

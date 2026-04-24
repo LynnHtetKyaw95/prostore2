@@ -7,6 +7,15 @@ import Sorting from "@/components/Sorting";
 import { getAllProducts } from "@/lib/actions/productAction";
 import { Suspense } from "react";
 
+interface Props {
+  searchParams: Promise<{
+    q: string;
+    category: string;
+    price: string;
+    rating: string;
+  }>;
+}
+
 interface SearchPageProps {
   searchParams: Promise<{
     q?: string;
@@ -27,6 +36,36 @@ interface getFilterURLProps {
 }
 
 export const revalidate = 60;
+
+export async function generateMetadata(props: Props) {
+  const {
+    q = "all",
+    category = "all",
+    rating = "all",
+    price = "all",
+  } = await props.searchParams;
+
+  const isQuerySet = q && q !== "all" && q.trim() !== "";
+  const isCategorySet =
+    category && category !== "all" && category.trim() !== "";
+  const isPriceSet = price && price !== "all" && price.trim() !== "";
+  const isRatingSet = rating && rating !== "all" && rating.trim() !== "";
+
+  if (isQuerySet || isCategorySet || isPriceSet || isRatingSet) {
+    return {
+      title: `
+      Search ${isQuerySet ? q : ""} 
+      ${isCategorySet ? `: Category ${category}` : ""}
+      ${isPriceSet ? `: Price ${price}` : ""}
+      ${isRatingSet ? `: Rating ${rating}` : ""}
+      `,
+    };
+  } else {
+    return {
+      title: "Search Products",
+    };
+  }
+}
 
 const SearchPage = async (props: SearchPageProps) => {
   const {

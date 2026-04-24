@@ -21,7 +21,7 @@ const FilterDescription = ({ q, category, price, rating }: Props) => {
         (category !== "all" && q !== "") ||
         price !== "all" ||
         rating !== "all" ? (
-          <Button variant={"link"} asChild>
+          <Button variant={"destructive"} asChild>
             <Link href={"/search"}>Clear</Link>
           </Button>
         ) : null}

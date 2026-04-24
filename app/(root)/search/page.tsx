@@ -12,6 +12,14 @@ interface SearchPageProps {
   }>;
 }
 
+interface getFilterURLProps {
+  c?: string;
+  s?: string;
+  p?: string;
+  r?: string;
+  pg?: string;
+}
+
 const SearchPage = async (props: SearchPageProps) => {
   const {
     q = "all",
@@ -21,6 +29,29 @@ const SearchPage = async (props: SearchPageProps) => {
     sort = "newest",
     page = 1,
   } = await props.searchParams;
+
+  // Construct filter URL
+  function getFilterURL({ c, s, p, r, pg }: getFilterURLProps) {
+    const params = { q, category, price, rating, sort, page: String(page) };
+
+    if (c) {
+      params.category = c;
+    }
+    if (s) {
+      params.sort = s;
+    }
+    if (p) {
+      params.price = p;
+    }
+    if (r) {
+      params.rating = r;
+    }
+    if (pg) {
+      params.page = pg;
+    }
+
+    return `/search?${new URLSearchParams(params).toString()}`;
+  }
 
   const products = await getAllProducts({
     query: q,

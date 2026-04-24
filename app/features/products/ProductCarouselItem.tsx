@@ -42,7 +42,7 @@ const ProductCarouselItem = ({ data }: { data: Product[] }) => {
                   loading="eager"
                 />
                 <div className="absolute inset-0 flex items-end justify-center">
-                  <h2 className="bg-gray-900 bg-opacity-50 text-2xl font-bold px-2 text-white">
+                  <h2 className="bg-gray-100/50  text-2xl font-bold p-2 text-black">
                     {product.name}
                   </h2>
                 </div>

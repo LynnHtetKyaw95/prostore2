@@ -1,5 +1,11 @@
 import ProductCard from "@/app/features/products/ProductCard";
+import CategoryFilter from "@/components/CategoryFilter";
+import FilterDescription from "@/components/FilterDescription";
+import PriceFilter from "@/components/PriceFilter";
+import RatingFilter from "@/components/RatingFilter";
+import Sorting from "@/components/Sorting";
 import { getAllProducts } from "@/lib/actions/productAction";
+import { Suspense } from "react";
 
 interface SearchPageProps {
   searchParams: Promise<{
@@ -20,6 +26,8 @@ interface getFilterURLProps {
   pg?: string;
 }
 
+export const revalidate = 60;
+
 const SearchPage = async (props: SearchPageProps) => {
   const {
     q = "all",
@@ -36,12 +44,14 @@ const SearchPage = async (props: SearchPageProps) => {
 
     if (c) {
       params.category = c;
+      params.page = "1";
     }
     if (s) {
       params.sort = s;
     }
     if (p) {
       params.price = p;
+      params.page = "1";
     }
     if (r) {
       params.rating = r;
@@ -64,9 +74,30 @@ const SearchPage = async (props: SearchPageProps) => {
 
   return (
     <div className="grid md:grid-cols-5 md:gap-6">
-      <div className="filter-links">{/* FILTERS */}</div>
+      <div className="filter-links">
+        {/* FILTERS */}
+
+        <Suspense fallback={<p>Loading categories...</p>}>
+          <CategoryFilter category={category} getFilterURL={getFilterURL} />
+        </Suspense>
+
+        <PriceFilter price={price} getFilterURL={getFilterURL} />
+
+        <RatingFilter rating={rating} getFilterURL={getFilterURL} />
+      </div>
 
       <div className="space-y-4 md:col-span-4">
+        <div className="flex-between flex-col md:flex-row my-4">
+          <FilterDescription
+            q={q}
+            category={category}
+            price={price}
+            rating={rating}
+          />
+
+          <Sorting sort={sort} getFilterURL={getFilterURL} />
+        </div>
+
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
           {!products.data.length && <p>No products found</p>}
 
